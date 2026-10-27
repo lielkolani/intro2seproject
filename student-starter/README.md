@@ -22,3 +22,8 @@ Choose one theme: Fantasy Dungeon, Space Skirmish, Robot Arena or Creature Tourn
 Read the workshop PDF for the current week and maintain one evolving Git repository all semester.
 
 Utilities: `ConsoleChoice.read()` for safe numeric input, `Checks.that()` and `Checks.within()` for early tests. There are no hidden future requirements in this kit.
+
+**WEEK 01**
+
+This week we've added the base combat methods and the game loop.
+The syntax is different than python, but the general idea of using classes and methods was about the same.
