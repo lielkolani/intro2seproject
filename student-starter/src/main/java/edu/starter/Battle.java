@@ -7,7 +7,7 @@ public class Battle {
         return combatant.getHealth() <= 0;
     }
 
-    public static boolean playBattle(Combatant player, Combatant enemy) {
+    public static boolean playBattle(Player player, Enemy enemy) {
         Scanner scan = new Scanner(System.in);
         player.clearDefense();
         while (!isDefeated(player) && !isDefeated(enemy)) {
@@ -41,6 +41,7 @@ public class Battle {
                 enemy.attack(player);
             }
         }
-        return (player.getHealth() > 0 && enemy.getHealth() == 0);
+        return (isDefeated(enemy));
+        
     }
 }
