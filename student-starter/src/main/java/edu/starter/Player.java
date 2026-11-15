@@ -7,6 +7,7 @@ public class Player implements Combatant {
     private int pendingDefense;
     private int baseDamage;
 
+    // @inv: 0<=HP<=maximumHealth; 0<=resources<=10; Attack never decreases.
     public Player(int health, int maxHealth, int resources, int pendingDefense, int baseDamage) {
         this.health = health;
         this.maxHealth = maxHealth;
@@ -14,8 +15,7 @@ public class Player implements Combatant {
         this.pendingDefense = pendingDefense;
         this.baseDamage = baseDamage;
     }
-
-    @Override
+    // @inv: takeDamage always leaves the player on >=0 HP.
     public void takeDamage(int damage) {
         if ((health - (damage - pendingDefense)) < 0) {
             health = 0;
@@ -25,7 +25,6 @@ public class Player implements Combatant {
         pendingDefense = 0;
     }
 
-    @Override
     public int getHealth() {
         return health;
     }
@@ -46,7 +45,6 @@ public class Player implements Combatant {
         pendingDefense = 0;
     }
 
-    @Override
     public void attack(Combatant enemy) {
         enemy.takeDamage(baseDamage);
     }
@@ -54,7 +52,7 @@ public class Player implements Combatant {
     public void defense() {
         pendingDefense += 5;
     }
-
+    // @inv: always does 15 damage.
     public boolean specialAttack(Combatant enemy) {
         if (resources >= 3) {
             resources -= 3;
@@ -64,7 +62,7 @@ public class Player implements Combatant {
             return false;
         }
     }
-
+    // @inv: always leaves player on <=10 HP.
     public boolean recoverResources() {
         if (resources <= 7) {
             resources += 3;
@@ -76,15 +74,16 @@ public class Player implements Combatant {
             return false;
         }
     }
-
+    // @post: RECOVERY makes HP = min(maxHP, oldHP + 25), withouth changing resources or Attack.
     public void recover() {
+        // HP cap enforcement.
         if (health <= maxHealth - 25) {
             health += 25;
         } else {
             health = maxHealth;
         }
     }
-
+    // @post: POWER makes Attack = oldAttack + 2, without changing HP or resources.
     public void power() {
         baseDamage += 2;
     }
